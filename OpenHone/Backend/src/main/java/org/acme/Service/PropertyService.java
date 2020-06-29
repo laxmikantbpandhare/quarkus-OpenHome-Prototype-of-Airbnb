@@ -49,6 +49,7 @@ public class PropertyService {
 //            deductfor7DaysRemovalProperty(p1);
 //            notDeductedRemovalProperty(p1);
         }
+        
         else{
           //  notDeductedRemovalProperty(p1);
         }
