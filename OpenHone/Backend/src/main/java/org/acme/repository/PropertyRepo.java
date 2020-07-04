@@ -17,8 +17,11 @@ import java.util.List;
 @Transactional
 public interface PropertyRepo extends JpaRepository<Property,Integer> {//} , JpaSpecificationExecutor {
 
-    @Query("SELECT p FROM property p WHERE p.owner_id = ?1 AND p.status = 'Created'")
+    @Query("SELECT p FROM Property p WHERE p.owner_id = ?1 AND p.status = 'Created'")
     List<Property> findByOwner(Person ownerId);
+
+//    @Query("SELECT p FROM Property p WHERE p.owner_id = ?1")
+//    List<Property> findByOwner(Person ownerId);
 
 //    @Query("SELECT p FROM property p WHERE p.city like %city%")
 //    List<Property> findByCityLike(String city);

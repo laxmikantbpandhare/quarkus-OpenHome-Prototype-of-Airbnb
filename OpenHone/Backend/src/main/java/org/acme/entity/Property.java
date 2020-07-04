@@ -10,10 +10,10 @@ import java.util.List;
 
 @Entity
 @Table(name="property")
-public class Property extends PanacheEntity {
+public class Property {
 
 
-   // @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "property_id", nullable = false)
     private int propertyId;
@@ -24,7 +24,7 @@ public class Property extends PanacheEntity {
     public Property(){
 
     }
-    public Property(String propertyDescription, String streetName, String city, String state, int zipcode, String picture,String propertyType, String sharingType, int numberOfRooms, int totalSquareFootage,Person owner, int weekdayPrice,int weekendPrice, boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun, String wifi, String status) {
+    public Property(String propertyDescription, String streetName, String city, String state, int zipcode, String picture,String propertyType, String sharingType, int numberOfRooms, int totalSquareFootage,Person owner_id, int weekdayPrice,int weekendPrice, boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun, String wifi, String status) {
         this.propertyDescription = propertyDescription;
         this.streetName = streetName;
         this.city = city;
@@ -34,7 +34,7 @@ public class Property extends PanacheEntity {
         this.sharingType = sharingType;
         this.numberOfRooms = numberOfRooms;
         this.totalSquareFootage = totalSquareFootage;
-        this.owner = owner;
+        this.owner_id = owner_id;
         this.picture = picture;
         this.weekendPrice=weekendPrice;
         this.weekdayPrice=weekdayPrice;
@@ -48,7 +48,7 @@ public class Property extends PanacheEntity {
         this.wifi = wifi;
         this.status = status;
     }
-    public Property(String propertyDescription, String streetName, String city, String state, int zipcode, String propertyType, String sharingType, int numberOfRooms, int totalSquareFootage, boolean parking, float parkingFee, String wifi, boolean laundry, String view, boolean smoking, boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun, String picture, Person owner) {
+    public Property(String propertyDescription, String streetName, String city, String state, int zipcode, String propertyType, String sharingType, int numberOfRooms, int totalSquareFootage, boolean parking, float parkingFee, String wifi, boolean laundry, String view, boolean smoking, boolean mon, boolean tue, boolean wed, boolean thu, boolean fri, boolean sat, boolean sun, String picture, Person owner_id) {
         this.propertyDescription = propertyDescription;
         this.streetName = streetName;
         this.city = city;
@@ -72,7 +72,7 @@ public class Property extends PanacheEntity {
         this.sat = sat;
         this.sun = sun;
         this.picture = picture;
-        this.owner = owner;
+        this.owner_id = owner_id;
     }
 
     @Column(name="street_name")
@@ -211,12 +211,15 @@ public class Property extends PanacheEntity {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Person owner;
+    private Person owner_id;
+
 //    @Column(name="owner_id")
 //    private int owner_id;
 
     @OneToMany(mappedBy="propertyId", targetEntity = Reservations.class, fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
-    private List<Reservations> reservations=new ArrayList<>();;
+    private List<Reservations> reservations=new ArrayList<>();
+
+
 //    @PrePersist
 //    private void prePersist() {
 //        roomList.forEach( c -> c.setProperty(this));
@@ -414,11 +417,11 @@ public class Property extends PanacheEntity {
     }
 
     public Person getOwner() {
-        return owner;
+        return owner_id;
     }
 
-    public void setOwner(Person owner) {
-        this.owner = owner;
+    public void setOwner(Person owner_id) {
+        this.owner_id = owner_id;
     }
 
     public String getStatus() {
