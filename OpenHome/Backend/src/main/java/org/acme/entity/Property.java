@@ -119,13 +119,13 @@ public class Property {
         this.weekdayPrice = weekdayPrice;
     }
 
-    public List<Reservations> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservations> reservations) {
-        this.reservations = reservations;
-    }
+//    public List<Reservations> getReservations() {
+//        return reservations;
+//    }
+//
+//    public void setReservations(List<Reservations> reservations) {
+//        this.reservations = reservations;
+//    }
 
     @Column(name="city")
     private String city;
@@ -216,8 +216,8 @@ public class Property {
 //    @Column(name="owner_id")
 //    private int owner_id;
 
-    @OneToMany(mappedBy="propertyId", targetEntity = Reservations.class, fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
-    private List<Reservations> reservations=new ArrayList<>();
+//    @OneToMany(mappedBy="propertyId", targetEntity = Reservations.class, fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
+//    private List<Reservations> reservations=new ArrayList<>();
 
 
 //    @PrePersist
@@ -432,11 +432,11 @@ public class Property {
         this.status = status;
     }
 
-    public void addReservation(Reservations reservation){
-        reservations.add(reservation);
-        //reservation.setProperty(this);
-        reservation.setPropertyId(this.propertyId);
-    }
+//    public void addReservation(Reservations reservation){
+//        reservations.add(reservation);
+//        //reservation.setProperty(this);
+//        reservation.setPropertyId(this.propertyId);
+//    }
 
     @Override
     public String toString() {

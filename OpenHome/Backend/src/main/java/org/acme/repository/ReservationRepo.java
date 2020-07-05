@@ -14,10 +14,10 @@ public interface ReservationRepo extends JpaRepository<Reservations,Integer> { /
 
     //  List<Reservations> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(OffsetDateTime start_date, OffsetDateTime end_date);
 
-    @Query("SELECT * FROM reservations r WHERE r.guest_id = ?1")
+    @Query("SELECT r FROM Reservations r WHERE r.guestId = ?1")
     List<Reservations> findByGuestId(int guestId);
 
-    @Query("SELECT * FROM reservations r WHERE r.property_id = ?1")
+    @Query("SELECT r FROM Reservations r WHERE r.propertyId = ?1")
     List<Reservations> findByPropertyId(int propertyId);
 
 //    @Query("SELECT * FROM reservations r WHERE r.end_date <= ?1 AND r.status='Payment Processed'")

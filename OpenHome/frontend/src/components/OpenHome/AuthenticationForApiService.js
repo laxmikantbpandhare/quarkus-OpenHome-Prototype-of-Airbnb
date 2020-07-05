@@ -11,6 +11,11 @@ class AuthenticationForApiService {
         return axios.post(`${API_URL}/authenticate`, {
             email,
             password
+            //,
+            // headers: {
+            //     'Content-Type': 'application/json',
+            //     Accept: 'application/json'
+            // },
         })
     }
 

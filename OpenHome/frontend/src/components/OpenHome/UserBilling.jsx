@@ -34,7 +34,6 @@ class UserBilling extends Component {
       "guestId":sessionStorage.userId,
       "month":this.state.month,
       "year":this.state.year,
-
     };
 
     axios.post(API_URL + `/reservation/billing/guest`, data)

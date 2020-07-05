@@ -11,17 +11,16 @@ import org.acme.repository.ReservationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -44,16 +43,16 @@ public class ReservationController {
 
 
     // NOT tested did not found API on frontend
-    @PostMapping("/reservation/add")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<?> createReservation(@RequestBody Reservations reservation) throws IOException {//throws MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
-        int propertyId=reservation.getPropertyId();
-        Property property=propertyService.getProperty(propertyId);
-        property.addReservation(reservation);
-        reservationRepo.save(reservation);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
+//    @PostMapping("/reservation/add")
+//    @ResponseStatus(value = HttpStatus.CREATED)
+//    public ResponseEntity<?> createReservation(@RequestBody Reservations reservation) throws IOException {//throws MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+//        int propertyId=reservation.getPropertyId();
+//        Property property=propertyService.getProperty(propertyId);
+//        property.addReservation(reservation);
+//        reservationRepo.save(reservation);
+//
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+//    }
 
     @PostMapping("/reservation/new")
     @ResponseStatus(value = HttpStatus.CREATED)
@@ -115,7 +114,9 @@ public class ReservationController {
         Reservations reservation=new Reservations(booked_price,booked_price_weekend,booked_price_weekday,booking_date, start_date, end_date,guest_id,id,address,description);
         reservation.setStatus("Booked");
         reservation.setState("Booked");
-        property.addReservation(reservation);
+        // check this add reservation properly
+
+//        property.addReservation(reservation);
         reservationRepo.save(reservation);
 
         String recevier = personJPARepo.findById(reservation.getGuestId()).getEmail();
@@ -129,6 +130,156 @@ public class ReservationController {
 //        }
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/reservation/{id}")
+    public Reservations getReservation(@PathVariable int id) {
+        return reservationService.getReservation(id);
+    }
+
+//    @GetMapping("/reservation/guest/{guestId}")
+//    public List<Reservations> getGuestReservation(@PathVariable String guestId) {
+//        System.out.println(guestId);
+//        int id= Integer.parseInt(guestId);
+//        return reservationService.getHostReservations(id);
+//    }
+
+
+    @GetMapping("/reservation/guest/{id}")
+    public List<Reservations> getGuestReservations(@PathVariable int id) {
+        return reservationService.getGuestReservations(id);
+    }
+
+    @PostMapping("/reservation/billing/guest")
+    public List<Reservations> getGuestReservationsByMonthYear(@RequestBody Map<String, String> payload) throws ParseException {
+        System.out.println("payload"+payload);
+        String guestId = (String)payload.get("guestId");
+        int guest_id=Integer.parseInt(guestId);
+        String month =(String)payload.get("month").toUpperCase();
+        String year =(String)payload.get("year");
+        int year_value=Integer.parseInt(year);
+        return reservationService.getGuestReservationsByMonthYear(guest_id,month,year_value);
+    }
+
+    @GetMapping("/reservation/property/{id}")
+    public List<Reservations> getReservationProperties(@PathVariable int id) {
+        return reservationService.getReservationProperties(id);
+    }
+
+    @GetMapping("/reservation/host/{id}")
+    public List<Reservations> getHostReservations(@PathVariable int id) {
+        return reservationService.getHostReservations(id);
+    }
+
+    @PostMapping("/reservation/billing/host")
+    public List<Reservations> getHostReservationsByMonthYear(@RequestBody Map<String, String> payload) throws ParseException {
+        System.out.println("payload"+payload);
+        String hostId = (String)payload.get("hostId");
+        int hostid=Integer.parseInt(hostId);
+        String month =(String)payload.get("month").toUpperCase();
+        String year =(String)payload.get("year");
+        int year_value=Integer.parseInt(year);
+        return reservationService.getHostReservationsByMonthYear(hostid,month,year_value);
+    }
+
+    @PostMapping("/reservation/checkin")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    //public Reservations(float bookedPrice, float bookedPriceWeekend, float bookedPriceWeekday, OffsetDateTime bookingDate, OffsetDateTime startDate, OffsetDateTime endDate, int guestId, int propertyId) {
+    public ResponseEntity<?> checkinReservation(@RequestBody Map<String, String> payload) throws ParseException,IOException{// MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+
+        String reservationId = payload.get(payload.keySet().toArray()[0]);
+        int reservation_id = Integer.parseInt(reservationId);
+        Optional<Reservations> r = reservationRepo.findById(reservation_id);
+        if (!r.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+
+        //String checkInDate = payload.get(payload.keySet().toArray()[1]);
+        Reservations reservation = reservationService.getReservation(reservation_id);
+        int result = reservationService.checkInReservation(reservation);
+        if(result == 1){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+    }
+
+
+    @PostMapping("/reservation/checkout")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ResponseEntity<?> checkoutReservation(@RequestBody Map<String, String> payload) throws ParseException, IOException{//MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+        String reservationId = payload.get(payload.keySet().toArray()[0]);
+        int reservation_id = Integer.parseInt(reservationId);
+        //String checkOutDate = payload.get(payload.keySet().toArray()[1]);
+
+        Optional<Reservations> r = reservationRepo.findById(reservation_id);
+        if (!r.isPresent())
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        System.out.println("r.get().getState()"+r.get().getState());
+        System.out.println("r.get().getState().equals(\"CheckedIn\")"+r.get().getState().equals("CheckedIn"));
+        if(!r.get().getState().equals("CheckedIn") ){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Reservations reservation = reservationService.getReservation(reservation_id);
+        int result = reservationService.checkOutReservation(reservation);
+        if(result==1)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+
+    @PostMapping("/reservation/guest/cancel")
+    @ResponseStatus(value = HttpStatus.CREATED)
+
+    public ResponseEntity<?> cancelReservationByGuest(@RequestBody Map<String, String> payload) throws ParseException,IOException{// MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+        String reservationId = payload.get(payload.keySet().toArray()[0]);
+        int reservation_id = Integer.parseInt(reservationId);
+        //String checkOutDate = payload.get(payload.keySet().toArray()[1]);
+        Reservations reservation = reservationService.getReservation(reservation_id);
+        int result=reservationService.cancelReservationByGuest(reservation);
+        if(result==1)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+
+    @PostMapping("/reservation/host/cancel")
+    @ResponseStatus(value = HttpStatus.CREATED)
+
+    public ResponseEntity<?> cancelReservationByHost(@RequestBody Map<String, String> payload) throws ParseException,IOException{//} MessagingException, IOException, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+        String reservationId = payload.get(payload.keySet().toArray()[0]);
+        int reservation_id = Integer.parseInt(reservationId);
+        //String checkOutDate = payload.get(payload.keySet().toArray()[1]);
+        Reservations reservation = reservationService.getReservation(reservation_id);
+        int result=reservationService.cancelReservationByHost(reservation);
+        if(result==1)
+            return new ResponseEntity<>(HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+
+    @GetMapping("/reservation/autocheckout")
+    @ResponseStatus(value = HttpStatus.CREATED)
+
+    public List<Reservations> autocheckoutReservation() throws ParseException {
+
+        return reservationService.getReservationsToBeCheckedOut();
+        //return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/reservation/noshow")
+    @ResponseStatus(value = HttpStatus.CREATED)
+
+    public List<Reservations> noshowReservation() throws ParseException {
+
+        return reservationService.getReservationsForLateCheckIn();
+        //return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
