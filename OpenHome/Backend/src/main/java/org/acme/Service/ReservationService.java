@@ -25,14 +25,11 @@ import java.util.List;
 public class ReservationService {
 
     @Autowired
-    //@Qualifier("reservations")
+  //  @Qualifier("reservations")
     ReservationRepo reservationRepo;
 
     @Autowired
     PropertyService propertyService;
-
-    @Autowired
-    TimeService timeService;
 
     @Autowired
     PersonSpringDataRepo personSpringDataRepo;
@@ -43,9 +40,9 @@ public class ReservationService {
     @Autowired
     PersonJPARepo personJPARepo;
 
-    @Autowired
-   // @Qualifier("property")
-    PropertyRepo propertyRepo;
+//    @Autowired
+//    @Qualifier("property")
+//    PropertyRepo propertyRepo;
 
     public Reservations getReservation(int id) {
         return reservationRepo.findById(id).orElse(null);

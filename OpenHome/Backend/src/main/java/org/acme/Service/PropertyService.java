@@ -35,15 +35,15 @@ public class PropertyService extends PanacheEntity {
     @Autowired
     PersonJPARepo personJPARepo;
 
-    @PersistenceContext
-    EntityManager entityManager;
+//    @PersistenceContext
+//    EntityManager entityManager;
 
     @Autowired
-   // @Qualifier("reservations")
+    //@Qualifier("reservations")
     ReservationRepo reservationRepo;
 
-    @Autowired
-    ReservationService reservationService;
+//    @Autowired
+//    ReservationService reservationService;
 
     @Autowired
     TimeService timeService;
@@ -215,21 +215,21 @@ public class PropertyService extends PanacheEntity {
                 finaList.addAll(res);
         }
 
-        for(int i=0;i<finaList.size();i++){
-            Reservations reservations = reservationService.getReservation((int)finaList.get(i).getId());
-            reservations.setStatus("Available");
-            reservationRepo.save(reservations);
-
-            String receiver = personJPARepo.findById(reservations.getGuestId()).getEmail();
-
-//            if(!receiver.equals("")) {
-//                SendMail y = new SendMail();
-//                y.sendEmail("Your Booking got Cancelled in Open Home", receiver,
-//                        "Dear Customer, \n\n Your Booking got Cancelled in Open Home\n\n For more details check your dashboard\n\n " +
-//                                "Thanks and Regards, \n OpenHome Team");
-//            }
-
-        }
+//        for(int i=0;i<finaList.size();i++){
+//            Reservations reservations = reservationService.getReservation((int)finaList.get(i).getId());
+//            reservations.setStatus("Available");
+//            reservationRepo.save(reservations);
+//
+//            String receiver = personJPARepo.findById(reservations.getGuestId()).getEmail();
+//
+////            if(!receiver.equals("")) {
+////                SendMail y = new SendMail();
+////                y.sendEmail("Your Booking got Cancelled in Open Home", receiver,
+////                        "Dear Customer, \n\n Your Booking got Cancelled in Open Home\n\n For more details check your dashboard\n\n " +
+////                                "Thanks and Regards, \n OpenHome Team");
+////            }
+//
+//        }
 
     }
 
@@ -251,26 +251,26 @@ public class PropertyService extends PanacheEntity {
                 finaList.addAll(res);
         }
 
-        for(int i=0;i<finaList.size();i++){
-            double penaltyPrice = (0.15) * finaList.get(i).getBookedPrice();
-            Reservations reservations = reservationService.getReservation((int)finaList.get(i).getId());
-            reservations.setPenaltyValue((float)penaltyPrice);
-            reservations.setPenaltyReason("Penalty Paid by Host");
-            reservations.setStatus("Available");
-            reservationRepo.save(reservations);
-
-            String receiver = personJPARepo.findById(reservations.getGuestId()).getEmail();
-
-//            if(!receiver.equals("")) {
-//                SendMail y = new SendMail();
-//                y.sendEmail("Your Booking got Cancelled in Open Home", receiver,
-//                        "Dear Customer, \n\n Your Booking got Cancelled in Open Home\n\n For more details check your dashboard\n\n " +
-//                                "Thanks and Regards, \n OpenHome Team");
-//            }
-
-
-
-        }
+//        for(int i=0;i<finaList.size();i++){
+//            double penaltyPrice = (0.15) * finaList.get(i).getBookedPrice();
+//            Reservations reservations = reservationService.getReservation((int)finaList.get(i).getId());
+//            reservations.setPenaltyValue((float)penaltyPrice);
+//            reservations.setPenaltyReason("Penalty Paid by Host");
+//            reservations.setStatus("Available");
+//            reservationRepo.save(reservations);
+//
+//            String receiver = personJPARepo.findById(reservations.getGuestId()).getEmail();
+//
+////            if(!receiver.equals("")) {
+////                SendMail y = new SendMail();
+////                y.sendEmail("Your Booking got Cancelled in Open Home", receiver,
+////                        "Dear Customer, \n\n Your Booking got Cancelled in Open Home\n\n For more details check your dashboard\n\n " +
+////                                "Thanks and Regards, \n OpenHome Team");
+////            }
+//
+//
+//
+//        }
     }
 
 
