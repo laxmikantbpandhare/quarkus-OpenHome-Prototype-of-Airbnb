@@ -35,9 +35,9 @@ class LoginComponent extends Component {
 
     loginClicked(e) {
         e.preventDefault();
-
+        var headers =  { "Content-Type": "application/json" }
         AuthenticationForApiService
-            .authenticate(this.state.email, this.state.password)
+            .authenticate(this.state.email, this.state.password, headers)
             .then((response) => {
                 console.log("response", response)
                 AuthenticationForApiService.registerSuccessfulLogin(this.state.email, response.data.token)

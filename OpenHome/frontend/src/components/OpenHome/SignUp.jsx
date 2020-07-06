@@ -67,7 +67,7 @@ class SignUp extends Component {
                 console.log("Status Code : ", response.status);
                 if (response.status === 201) {
 
-                    console.log(response.data);
+                    console.log("response.data AFTER SIGNUP",response.data);
                     this.setState({
 
                         signup_status: response.data.message,

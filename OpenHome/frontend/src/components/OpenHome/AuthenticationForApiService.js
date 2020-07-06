@@ -5,12 +5,13 @@ export const AUTHENTICATED_USER_SESSION = 'authenticatedUser'
 
 class AuthenticationForApiService {
 
-    
 
-    authenticate(email, password) {
+
+    authenticate(email, password,headers) {
         return axios.post(`${API_URL}/authenticate`, {
             email,
-            password
+            password,
+            headers
             //,
             // headers: {
             //     'Content-Type': 'application/json',
