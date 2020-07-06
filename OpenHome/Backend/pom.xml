@@ -94,6 +94,26 @@
           <version>1.5.1.Final</version>
           <scope>compile</scope>
       </dependency>
+      <dependency>
+          <groupId>io.rest-assured</groupId>
+          <artifactId>rest-assured</artifactId>
+          <version>4.3.0</version>
+      </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-common</artifactId>
+      <version>4.1.49.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>backport-util-concurrent</groupId>
+      <artifactId>backport-util-concurrent</artifactId>
+      <version>3.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-core</artifactId>
+      <version>4.5.3.Final</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
