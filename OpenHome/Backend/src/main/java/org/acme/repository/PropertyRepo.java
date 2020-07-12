@@ -20,9 +20,9 @@ public interface PropertyRepo extends JpaRepository<Property,Integer> {//} , Jpa
     @Query("SELECT p FROM Property p WHERE p.owner_id = ?1 AND p.status = 'Created'")
     List<Property> findByOwner(Person ownerId);
 
-//    @Query("SELECT p FROM Property p WHERE p.owner_id = ?1")
-//    List<Property> findByOwner(Person ownerId);
-
 //    @Query("SELECT p FROM property p WHERE p.city like %city%")
-//    List<Property> findByCityLike(String city);
+//    List<Property> findByCity(Person ownerId);
+//
+//    @Query("SELECT p FROM property p WHERE p.city like %?1% AND p.propertyDescription like %?2%")
+//    List<Property> findByCity1(String city,String desc);
 }

@@ -81,11 +81,11 @@ class FrontPage extends Component {
                 city : this.state.location,
                 endDate : this.state.endDate,
                 startDate : this.state.startDate,
-                sharingType : this.state.sharingType,
-                propertyType: this.state.propertyType,
-                propertyDescription: this.state.propertyDescription,
-                wifi : this.state.wifi,
-                priceRange : this.state.priceRange
+                // sharingType : this.state.sharingType,
+                // propertyType: this.state.propertyType,
+                propertyDescription: this.state.propertyDescription
+                // wifi : this.state.wifi,
+                // priceRange : this.state.priceRange
             }
         console.log("data",data);
             localStorage.setItem('product_details', JSON.stringify(data));
@@ -229,9 +229,9 @@ class FrontPage extends Component {
                                 </div>
                                 <br/>
 
-                                 <div class="row" >
+                                 {/* <div class="row" > */}
 
-                                    <div class="col-sm-6 col-md-6">
+                                    {/* <div class="col-sm-6 col-md-6">
 
                                         <div class="form-group">
                                             <label for="where"><h5>Sharing Type</h5></label>
@@ -247,10 +247,12 @@ class FrontPage extends Component {
 
                                         </div>
 
-                                    </div>
-                                    <div class="col-sm-6 col-md-6">
+                                    </div> */}
 
-                                        <div class="form-group">
+{/*                                     
+                                    <div class="col-sm-6 col-md-6"> */}
+
+                                        {/* <div class="form-group">
                                             <label for="where"><h5>Property Type</h5></label>
                                             <div class="form-group">
 
@@ -270,12 +272,14 @@ class FrontPage extends Component {
 
                                             </div>
 
-                                        </div>
+                                        </div> */}
+
+{/* 
                                     </div>
 
-                                </div>
+                                </div> */}
 
-
+{/* 
                                 <div class="row" >
                                     <div class="col-sm-6 col-md-6">
                                         <div class="form-group">
@@ -308,7 +312,7 @@ class FrontPage extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
 
 
                                 <div class="row" >

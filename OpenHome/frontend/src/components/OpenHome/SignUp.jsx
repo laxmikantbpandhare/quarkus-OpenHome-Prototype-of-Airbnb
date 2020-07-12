@@ -53,7 +53,7 @@ class SignUp extends Component {
             password: this.state.password,
             name: this.state.name,
             role: role,
-            verification: "no",
+            verification: "yes",
             cardNumber: this.state.cardNumber,
             cvv: this.state.cvv,
             expiryDate: this.state.expiryDate,
@@ -65,7 +65,7 @@ class SignUp extends Component {
         axios.post(API_URL + "/persons/", data)
             .then((response) => {
                 console.log("Status Code : ", response.status);
-                if (response.status === 201) {
+                if (response.status === 200 || response.status === 201) {
 
                     console.log("response.data AFTER SIGNUP",response.data);
                     this.setState({

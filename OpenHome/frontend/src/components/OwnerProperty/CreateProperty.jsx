@@ -113,7 +113,7 @@ class CreateProperty extends Component {
 
   createProperty = e => {
     e.preventDefault();
-    var header = { "Content-Type": "application/JSON" };
+  //  var header = { "Content-Type": "application/JSON" };
     let user = sessionStorage.userId;
     // var i;
     // let rooms = [];
@@ -134,7 +134,7 @@ class CreateProperty extends Component {
       city: this.state.city,
       state: this.state.state,
       zipcode: this.state.zipcode,
-      phone: this.state.phone,
+    //  phone: this.state.phone,
       totalSquareFootage: this.state.totalSquareFootage,
       numberOfRooms: this.state.numberOfRooms,
       picture: this.state.picture,
@@ -177,8 +177,10 @@ class CreateProperty extends Component {
     } else if (this.state.propertyDescription === "") {
       alert("Property Description is Empty");
     } else {
-      axios.post(API_URL + "/property/add", data, header).then(response => {
-        if (response.status === 201) {
+      axios.post(API_URL + "/property/add/", data).then(response => {
+        console.log("response",response.status);
+        console.log(response.data);
+        if (response.status === 201 || response.status === 200) {
           this.setState({ status: "Success" });
           this.props.history.push(`/hostdashboard/${sessionStorage.userName}`);
         } else {

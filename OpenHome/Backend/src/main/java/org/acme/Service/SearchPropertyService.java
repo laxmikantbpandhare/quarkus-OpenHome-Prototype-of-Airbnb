@@ -5,6 +5,7 @@ import org.acme.entity.Reservations;
 import org.acme.entity.Search;
 import org.acme.repository.PropertyRepo;
 import org.acme.repository.ReservationRepo;
+import org.acme.repository.SearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,11 @@ public class SearchPropertyService {
     @Autowired
   //  @Qualifier("property")
     PropertyRepo propertyRepo;
+
+    @Autowired
+    //  @Qualifier("property")
+    SearchRepo searchRepo;
+
 
     @PersistenceContext
     EntityManager entityManager;
@@ -60,9 +66,41 @@ public class SearchPropertyService {
 
     }
 
+    public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
+    }
+
     public List<Property> retrievePropertiesByCriteria(Search filter) throws ParseException {
 
         //  Reservations reservations = reservationService.getReservation(1);
+        List<Property> listRes;
+
+      //  String sdate = filter.getStartDate();
+//        String edate = payload.get(payload.keySet().toArray()[2]);
+//        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date start_date = filter.getStartDate();
+        java.util.Date end_date = filter.getEndDate();
+
+        java.sql.Date start_date1 = convertJavaDateToSqlDate(start_date);
+        java.sql.Date end_date1 = convertJavaDateToSqlDate(end_date);
+
+//        Date date = new Date(String.valueOf(start_date1));
+//        Date date1 = new Date(String.valueOf(end_date1));
+        OffsetDateTime offsetDateTime = filter.getStartDate().toInstant()
+                .atOffset(ZoneOffset.UTC);
+        OffsetDateTime offsetDateTime1 = filter.getEndDate().toInstant()
+                .atOffset(ZoneOffset.UTC);
+        if(filter.getPropertyDescription()==""){
+                 listRes = searchRepo.findByCity(filter.getCity());
+
+        }
+        else{
+            listRes = searchRepo.findByCity1(filter.getCity(),filter.getPropertyDescription());
+        }
+
+        for(int i=0;i<listRes.size();i++){
+            System.out.println("list"+listRes.get(i).getPropertyId());
+        }
 
 //        List<Property> properties = propertyRepo.findAll(new Specification<Property>() {
 //
@@ -245,7 +283,7 @@ public class SearchPropertyService {
 //        }
 //
 //        return properties1;
-        return null;
+        return listRes;
     }
 
 

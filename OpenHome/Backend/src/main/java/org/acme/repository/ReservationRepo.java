@@ -1,11 +1,14 @@
 package org.acme.repository;
 
+import org.acme.entity.Property;
 import org.acme.entity.Reservations;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Qualifier("reservations")
@@ -34,6 +37,13 @@ public interface ReservationRepo extends JpaRepository<Reservations,Integer> { /
 
 //    @Query("SELECT p FROM person p WHERE p.name = ?1")
 //    Person findByName(String name);
+
+
+    @Query("SELECT r FROM Reservations r WHERE r.startDate <= ?1 AND r.endDate >= ?2")
+    List<Reservations> findCity(OffsetDateTime startDate, OffsetDateTime endDate);
+
+    @Query("SELECT r FROM Reservations r WHERE r.startDate <= ?1 AND r.endDate >= ?2 AND r.description LIKE ?3% ")
+    List<Reservations> findCity1(OffsetDateTime startDate, OffsetDateTime endDate, String desc);
 
 
 }

@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -30,6 +32,12 @@ public class SearchController {
 
     @PostMapping("/search/property")
     public List<Property> retrivePropertyDetails(@RequestBody Search property) throws ParseException {
+
+        System.out.println(property.getCity());
+        System.out.println(property.getEndDate());
+        System.out.println(property.getStartDate());
+        System.out.println(property.getPropertyDescription());
+
 
 //
 //            System.out.println(property.getPropertyType());

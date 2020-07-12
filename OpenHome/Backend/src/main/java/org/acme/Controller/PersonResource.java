@@ -119,7 +119,7 @@ public class PersonResource {
             savedPerson = repo.save(person);
 //            URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 //                    .buildAndExpand(savedPerson.getId()).toUri();
-//            System.out.println(savedPerson.getEmail());
+            System.out.println(savedPerson.getEmail());
 //            String subject = "Please Verify your Email ID with Open Home";
 //            String recevier = savedPerson.getEmail();
 //            String body = "Hi " + savedPerson.getName() + ",\n\nPlease verify your email with us by clicking on below link:\n http://localhost:8181/verifyUser/" + savedPerson.getId();

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,11 +21,11 @@ public class PropertyController {
     PropertyService propertyService;
 
     @PostMapping("/property/add")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public ResponseEntity<?> createProperty(@RequestBody Property property) throws IOException{//}, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
+    //@ResponseStatus(value = HttpStatus.CREATED)
+    public String createProperty(@RequestBody Property property) throws IOException{//}, com.sun.xml.internal.messaging.saaj.packaging.mime.MessagingException {
         System.out.println("Request from frontend: "+property.getPropertyDescription());
         propertyService.createProperty(property);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return "Success";
     }
 
 //    @RequestMapping(value="/property/remove/{property}",method = RequestMethod.POST)
