@@ -14,9 +14,6 @@ The time advancement management is the part the application’s time can be move
    | Name                           | SJSU ID    |             Email ID                  | 
    |--------------------------------|------------|---------------------------------------|
    | **Laxmikant Bhaskar Pandhare** | 013859989  |  laxmikantbhaskar.pandhare@sjsu.edu   |
-   | **Prachi Chouksey**            | 013828945  |     prachi.chouksey@sjsu.edu          |
-   | **Ayushi Singh**               | 013820807  |      ayushi.singh@sjsu.edu            | 
-   | **Kumar Rishabh**              | 011457914  |      kumarrishabh@sjsu.edu            |
    
 
 ## High Level Design Diagram
