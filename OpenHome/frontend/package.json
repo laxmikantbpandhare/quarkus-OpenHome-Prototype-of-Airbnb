@@ -9,7 +9,7 @@
     "bootstrap": "^4.4.0",
     "formik": "^1.5.1",
     "google-maps": "^3.3.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "rc-datetime-picker": "^1.6.1",
     "react": "^16.8.4",
